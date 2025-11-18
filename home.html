@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>speletya — microscopist & open sourcer</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap');
+
+    :root{
+      --bg:#ffffff;
+      --fg:#0b0b0b;
+      --muted:#6b6b6b;
+      --font-serif:'Lora', serif;
+      --fade-duration:1600ms;
+    }
+
+    html,body{
+      height:100%;margin:0;
+      background:linear-gradient(180deg, #ffffff 0%, #e7e7ec 100%);
+      color:var(--fg);
+      font-family:var(--font-serif);
+      display:flex;align-items:center;justify-content:center;
+    }
+
+    .wrap{text-align:center;padding:2rem;width:min(720px,94vw);}  
+
+    /* Ink-like fade with soft shadow (smaller shadow) */
+    .ink-line{
+      opacity:0;
+      filter:blur(4px);
+      transform:translateY(8px);
+      animation:inkFade var(--fade-duration) ease forwards;
+      margin:0.6rem 0;
+      font-size:clamp(1rem,2.3vw,1.55rem);
+      letter-spacing:0.4px;
+      font-weight:500;
+      text-shadow:0 1px 3px rgba(0,0,0,0.14);
+    }
+
+    @keyframes inkFade{
+      0%{
+        opacity:0;
+        filter:blur(5px);
+        color:#bfbfbf;
+        transform:translateY(10px);
+      }
+      40%{
+        opacity:0.35;
+        color:#9d9d9d;
+        filter:blur(3px);
+      }
+      75%{
+        opacity:0.8;
+        filter:blur(1.2px);
+      }
+      100%{
+        opacity:1;
+        color:var(--fg);
+        filter:blur(0px);
+        transform:translateY(0);
+      }
+    }
+
+    /* Links block */
+    .links{
+      margin-top:1.8rem;
+      opacity:0;
+      animation:inkFade 1600ms ease forwards;
+      display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;
+    }
+
+    .links a{
+      text-decoration:none;padding:0.6rem 0.9rem;border-radius:10px;
+      font-weight:600;border:1px solid rgba(0,0,0,0.08);
+      color:var(--fg);transition:0.25s;
+      text-shadow:0 1px 2px rgba(0,0,0,0.10);
+      font-family:var(--font-serif);
+      background:rgba(255,255,255,0.6);
+      backdrop-filter:blur(4px);
+    }
+
+    .links a:hover{
+      transform:translateY(-4px);
+      box-shadow:0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .hint{color:var(--muted);font-size:0.82rem;margin-top:1.5rem;font-family:var(--font-serif);}
+
+    /* Ink diffusion disappear effect (dramatic water/ink blur) */
+    .ink-diffuse{
+      animation:diffuseFade 2.8s ease forwards;
+      filter:blur(0px);
+    }
+
+    @keyframes diffuseFade{
+      0%{opacity:1;filter:blur(0px);}
+      30%{opacity:0.85;filter:blur(6px);transform:translateY(4px);}
+      55%{opacity:0.45;filter:blur(14px);transform:translateY(8px) scale(1.01);}
+      75%{opacity:0.18;filter:blur(26px);transform:translateY(14px) scale(1.02);}
+      100%{opacity:0;filter:blur(40px);transform:translateY(20px) scale(1.03);}
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion:reduce){
+      .ink-line, .links { animation: none; opacity: 1; transform: none; filter: none; }
+      .ink-diffuse { animation: none; opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap" id="mainWrap">
+    <div id="line1" class="ink-line" style="animation-delay:200ms">Hi there, my name is speletya</div>
+    <div id="line2" class="ink-line" style="animation-delay:2200ms">I am a Scientist and a Mcroscopist</div>
+    <div id="line3" class="ink-line" style="animation-delay:4200ms">Here is some of my work</div>
+
+    <div id="line4" class="links" style="animation-delay:6400ms">
+      <a id="cvLink" href="#" target="_blank" rel="noopener">Curriculum Vitae</a>
+      <a id="galleryLink" href="#" target="_blank" rel="noopener">Gallery</a>
+      <a id="githubLink" href="#" target="_blank" rel="noopener">GitHub</a>
+    </div>
+
+    <p class="hint">Replace the # URLs with your real links.</p>
+  </main>
+  <script>
+    // Inactivity-driven ink diffusion with automatic reappearance
+    (function(){
+      let inactivityTimer = null;
+      const INACTIVITY_MS = 8000; // 8 seconds
+      const wrap = document.getElementById('mainWrap');
+
+      function startDiffusionCycle(){
+        // add diffusion animation class
+        wrap.classList.add('ink-diffuse');
+
+        // after the diffusion animation finishes, ensure it's visually vanished briefly,
+        // then restore the original state so lines reappear
+        const vanishDuration = 2800; // matches diffuse animation
+        const restoreDelay = 4200; // when to restore
+
+        setTimeout(()=>{
+          wrap.style.opacity = '0';
+          wrap.style.filter = 'blur(40px)';
+        }, vanishDuration);
+
+        setTimeout(()=>{
+          // remove class and reset visual properties so the ink lines can animate again
+          wrap.classList.remove('ink-diffuse');
+          wrap.style.display = 'block';
+          wrap.style.opacity = '1';
+          wrap.style.filter = 'none';
+
+          // Force a reflow so CSS animations can replay
+          void wrap.offsetWidth;
+
+          // re-trigger the entrance animations by re-adding the ink-line animation delays
+          // (we simply toggle a class-less restart by removing and re-setting animation inline)
+          const lines = wrap.querySelectorAll('.ink-line');
+          lines.forEach(line => {
+            const delay = line.style.animationDelay || '0ms';
+            line.style.animation = 'none';
+            // allow the browser a tick to flush
+            setTimeout(()=>{
+              line.style.animation = '';
+              line.style.animationDelay = delay;
+            }, 20);
+          });
+
+          const links = wrap.querySelectorAll('.links');
+          links.forEach(l => {
+            const delay = l.style.animationDelay || '0ms';
+            l.style.animation = 'none';
+            setTimeout(()=>{
+              l.style.animation = '';
+              l.style.animationDelay = delay;
+            }, 20);
+          });
+
+        }, restoreDelay);
+      }
+
+      function resetTimer(){
+        if(inactivityTimer) clearTimeout(inactivityTimer);
+        inactivityTimer = setTimeout(startDiffusionCycle, INACTIVITY_MS);
+      }
+
+      // listen for activity
+      ['mousemove','keydown','scroll','touchstart'].forEach(evt=> window.addEventListener(evt, resetTimer, {passive:true}));
+
+      // start initial timer
+      resetTimer();
+
+      // clean up on unload (not strictly necessary but tidy)
+      window.addEventListener('unload', ()=>{
+        if(inactivityTimer) clearTimeout(inactivityTimer);
+      });
+    })();
+  </script>
+</body>
+</html>
