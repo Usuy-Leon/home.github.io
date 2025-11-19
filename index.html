@@ -52,8 +52,8 @@ body, html {
 
 .ink-line.fade-last {
   animation: inkAppear var(--fade-duration) ease forwards,
-             inkDisappear 12.5s ease forwards var(--cycle);
-  animation-delay: 6.5s, calc(12.5s + var(--fade-duration));
+             inkDisappear 120s ease forwards var(--cycle);
+  animation-delay: 6.5s, calc(120s + var(--fade-duration));
 }
 
 .ink-line.fade-last a {
@@ -69,12 +69,14 @@ body, html {
 @keyframes inkAppear {
   0% { opacity: 0; filter: blur(14px); color:#bfbfbf; transform: translateY(12px); }
   40% { opacity: 0.35; filter: blur(7px); color:#a5a5a5; }
+  50% { opacity: 0.55; filter: blur(6px); color:#a5a5a5; }
   75% { opacity: 0.8; filter: blur(3px); }
   100% { opacity: 1; filter: blur(0px); color: var(--fg); transform: translateY(0px); }
 }
 
 @keyframes inkDisappear {
   0% { opacity: 1; filter: blur(0px); transform: translateY(0px); }
+  40% { opacity: 0.6; filter: blur(6px); transform: translateY(-4px); }
   50% { opacity: 0.4; filter: blur(8px); transform: translateY(-6px); }
   100% { opacity: 0; filter: blur(18px); transform: translateY(-20px); }
 }
