@@ -8,6 +8,16 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #ffffff;
+  --fg: #0b0b0b;
+  --muted: #6b6b6b;
+  --font-serif: 'Lora', serif;
+  --fade-duration: 2.3s;
+  --cycle: 120s;
+}
+
 body, html {
   margin: 0;
   height: 100%;
@@ -19,30 +29,6 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fullReset var(--cycle) linear infinite;
-}
-:root {
-  --bg: #ffffff;
-  --fg: #0b0b0b;
-  --muted: #6b6b6b;
-  --font-serif: 'Lora', serif;
-  --fade-duration: 2.3s;
-  --cycle: 120s;
-}
-
-/* MERGED BODY STYLE */
-body, html {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  background: url('https://Usuy-Leon.github.io/home.github.io/Imagenes/test_2.jpg') no-repeat center center fixed;
-  color: var(--fg);
-  font-family: var(--font-serif);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  /* keep your animation */
   animation: fullReset var(--cycle) linear infinite;
 }
 
@@ -61,14 +47,18 @@ body, html {
   letter-spacing: 0.7px;
   font-weight: 500;
   animation: inkAppear var(--fade-duration) ease forwards,
+             inkDisappear 6.5s ease forwards var(--cycle);
 }
-/* Ensure the fade-last container animates with delay */
+
 .ink-line.fade-last {
   animation: inkAppear var(--fade-duration) ease forwards,
-  animation-delay: 6.5s; 
+             inkDisappear 6.5s ease forwards var(--cycle);
+  animation-delay: 6.5s, calc(6.5s + var(--fade-duration));
 }
+
 .ink-line.fade-last a {
-  animation: none;
+  font-size: 1.1rem; /* Smaller than the text lines */
+  animation: none; /* Disable animation for individual buttons */
 }
 
 .ink-line:nth-child(1) { animation-delay: 0s, var(--cycle); }
@@ -76,12 +66,6 @@ body, html {
 .ink-line:nth-child(3) { animation-delay: 3.4s, var(--cycle); }
 .ink-line:nth-child(4) { animation-delay: 4s, var(--cycle); }
 
-.ink-line.fade-last a {
-  font-size: 1.1rem; /* Smaller than the text lines */
-}
-.ink-line.fade-last a {
-  animation: none;
-}
 @keyframes inkAppear {
   0% { opacity: 0; filter: blur(14px); color:#bfbfbf; transform: translateY(12px); }
   40% { opacity: 0.35; filter: blur(7px); color:#a5a5a5; }
@@ -98,6 +82,7 @@ body, html {
 @keyframes fullReset {
   0%, 100% { opacity: 1; }
 }
+
 </style>
 </head>
 
