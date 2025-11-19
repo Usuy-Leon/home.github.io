@@ -4,19 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title> </title>
+<title></title>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap');
-
-body {
-  margin: 0;
-  background-image: url("images/test_2.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  height: 100vh;
-  width: 100vw;
-    }
 
 :root {
   --bg: #ffffff;
@@ -24,18 +15,23 @@ body {
   --muted: #6b6b6b;
   --font-serif: 'Lora', serif;
   --fade-duration: 2.7s;
-  --cycle: 180s
+  --cycle: 180s;
 }
 
-html, body {
-  height: 100%;
+/* MERGED BODY STYLE */
+body, html {
   margin: 0;
+  height: 100%;
+  width: 100%;
   background: linear-gradient(180deg, #ffffff 0%, #e7e7ec 100%);
   color: var(--fg);
   font-family: var(--font-serif);
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* keep your animation */
+  animation: fullReset var(--cycle) linear infinite;
 }
 
 .wrap {
@@ -62,67 +58,56 @@ html, body {
 .ink-line:nth-child(4) { animation-delay: 6s, var(--cycle); }
 
 @keyframes inkAppear {
-  0% {
-    opacity: 0;
-    filter: blur(14px);
-    color: #bfbfbf;
-    transform: translateY(12px);
-  }
-  40% {
-    opacity: 0.35;
-    filter: blur(7px);
-    color: #a5a5a5;
-  }
-  75% {
-    opacity: 0.8;
-    filter: blur(3px);
-  }
-  100% {
-    opacity: 1;
-    filter: blur(0px);
-    color: var(--fg);
-    transform: translateY(0px);
-  }
+  0% { opacity: 0; filter: blur(14px); color:#bfbfbf; transform: translateY(12px); }
+  40% { opacity: 0.35; filter: blur(7px); color:#a5a5a5; }
+  75% { opacity: 0.8; filter: blur(3px); }
+  100% { opacity: 1; filter: blur(0px); color: var(--fg); transform: translateY(0px); }
 }
 
 @keyframes inkDisappear {
-  0% {
-    opacity: 1;
-    filter: blur(0px);
-    transform: translateY(0px);
-  }
-  50% {
-    opacity: 0.4;
-    filter: blur(8px);
-    transform: translateY(-6px);
-  }
-  100% {
-    opacity: 0;
-    filter: blur(18px);
-    transform: translateY(-20px);
-  }
-}
-
-body {
-  animation: fullReset var(--cycle) linear infinite;
+  0% { opacity: 1; filter: blur(0px); transform: translateY(0px); }
+  50% { opacity: 0.4; filter: blur(8px); transform: translateY(-6px); }
+  100% { opacity: 0; filter: blur(18px); transform: translateY(-20px); }
 }
 
 @keyframes fullReset {
-  0% { opacity: 1; }
-  99.999% { opacity: 1; }
-  100% { opacity: 1; }
+  0%, 100% { opacity: 1; }
 }
 </style>
 </head>
+
 <body>
 <div class="wrap">
   <div class="ink-line">Hello there</div>
-  <div class="ink-line">My name is Usuy Leon </div>
-  <div class="ink-line">I am a biologist and a microscopist </div>
-  <div class="ink-line">Here is some of my work. <div class="links" style="margin-top:2rem; display:flex; gap:1rem; justify-content:center;">
-    <a href="https://usuy-leon.github.io/cv//" target="_blank" style="padding:0.25rem 0.7rem; border-radius:999px; border:1px solid rgba(0,0,0,0.12); background:rgba(255,255,255,0.7); backdrop-filter:blur(10px); text-decoration:none; font-weight:400; color:var(--fg);">CV</a>
-    <a href="#" target="_blank" style="padding:0.25rem 0.7rem; border-radius:999px; border:1px solid rgba(0,0,0,0.12); background:rgba(255,255,255,0.7); backdrop-filter:blur(10px); text-decoration:none; font-weight:400; color:var(--fg);">Galería</a>
-    <a href="https://github.com/Usuy-Leon?tab=stars" target="_blank" style="padding:0.25rem 0.7rem; border-radius:999px; border:1px solid rgba(0,0,0,0.12); background:rgba(255,255,255,0.7); backdrop-filter:blur(10px); text-decoration:none; font-weight:400; color:var(--fg);">GitHub</a>
+  <div class="ink-line">My name is Usuy Leon</div>
+  <div class="ink-line">I am a biologist and a microscopist</div>
+
+  <!-- FIXED: PROPERLY CLOSED TAGS -->
+  <div class="ink-line">
+    Here is some of my work.
+  </div>
+
+  <div class="links" style="margin-top:2rem; display:flex; gap:1rem; justify-content:center;">
+    <a href="https://usuy-leon.github.io/cv/" target="_blank"
+       style="padding:0.25rem 0.7rem; border-radius:999px; border:1px solid rgba(0,0,0,0.12);
+       background:rgba(255,255,255,0.7); backdrop-filter:blur(10px);
+       text-decoration:none; font-weight:400; color:var(--fg);">
+      CV
+    </a>
+
+    <a href="#"
+       style="padding:0.25rem 0.7rem; border-radius:999px; border:1px solid rgba(0,0,0,0.12);
+       background:rgba(255,255,255,0.7); backdrop-filter:blur(10px);
+       text-decoration:none; font-weight:400; color:var(--fg);">
+      Galería
+    </a>
+
+    <a href="https://github.com/Usuy-Leon?tab=stars" target="_blank"
+       style="padding:0.25rem 0.7rem; border-radius:999px; border:1px solid rgba(0,0,0,0.12);
+       background:rgba(255,255,255,0.7); backdrop-filter:blur(10px);
+       text-decoration:none; font-weight:400; color:var(--fg);">
+      GitHub
+    </a>
   </div>
 </div>
 </body>
