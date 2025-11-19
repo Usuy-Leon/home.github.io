@@ -67,7 +67,7 @@ body, html {
 .ink-line.fade-last {
   animation: inkAppear var(--fade-duration) ease forwards,
              inkDisappear 6.5s ease forwards var(--cycle);
-  animation-delay: 6.5s, calc(6.5s + var(--fade-duration));
+  animation-delay: 6.5s, 6,5s);
 }
 
 
@@ -79,9 +79,7 @@ body, html {
 .ink-line.fade-last a {
   font-size: 1.1rem; /* Smaller than the text lines */
 }
-.ink-line.fade-last a {
-  animation: none;
-}
+
 @keyframes inkAppear {
   0% { opacity: 0; filter: blur(14px); color:#bfbfbf; transform: translateY(12px); }
   40% { opacity: 0.35; filter: blur(7px); color:#a5a5a5; }
