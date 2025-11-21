@@ -1,3 +1,3 @@
-This is my Home repo, is for an idea of nested website using github pages.
+This is my Home repo, is for an idea of nested websites using github pages.
 
-The idea is to creeate a portafolio and multiple websites that can edited separatly, but they work together as one.
+The idea is to create a portafolio and multiple websites that can be edited as diferentes repos, but they work together as one.
